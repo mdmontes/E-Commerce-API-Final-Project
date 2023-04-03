@@ -1,0 +1,282 @@
+openapi: 3.0.0
+info:
+  title: CTD 06-lucky-sniffles-API PROD
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://lucky-sniffle-petstore.onrender.com/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterRequest'
+              - example:
+                  name: sniffly_one
+                  email: sniffly_kittykat@gmail.com
+                  password: mickymouse
+            example:
+              name: sniffly_one
+              email: sniffly_kittykat@gmail.com
+              password: mickymouse
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  email: sniffly_kittykat@gmail.com
+                  password: mickymouse
+            example:
+              email: sniffly_kittykat@gmail.com
+              password: mickymouse
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /products:
+    get:
+      tags:
+      - Products
+      summary: getAllProducts
+      operationId: getAllProducts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    post:
+      tags:
+      - Products
+      summary: createProduct
+      operationId: createProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/createProductRequest'
+              - example:
+                  name: fellar_necklace
+                  price: '3.50'
+                  featured: 'true'
+                  rating: '3.1'
+                  manufacturer: Calibaba
+            example:
+              name: fellar_necklace
+              price: '3.50'
+              featured: 'true'
+              rating: '3.1'
+              manufacturer: Calibaba
+        required: true
+      responses:
+        '201':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /products/{id}:
+    parameters:
+    - in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: The product ID
+    get:
+      tags:
+      - Products
+      summary: getOneProduct
+      operationId: getOneProduct
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  
+    patch:
+      tags:
+      - Products
+      summary: editOneProduct
+      operationId: editOneProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/editOneProductRequest'
+              - example:
+                  name: renamed cat product
+                  price: '3.45'
+                  rating: '2.1'
+                  manufacturer: SnifflyOne
+                  featured: 'false'
+                  shipping_status: shipped
+            example:
+              name: renamed cat product
+              price: '3.45'
+              rating: '2.1'
+              manufacturer: SnifflyOne
+              featured: 'false'
+              shipping_status: shipped
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Products
+      summary: deleteOneProduct
+      operationId: deleteOneProduct
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: sniffly_one
+        email: sniffly_kittykat@gmail.com
+        password: mickymouse
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: sniffly_kittykat@gmail.com
+        password: mickymouse
+    createProductRequest:
+      title: createProductRequest
+      required:
+      - name
+      - price
+      - featured
+      - rating
+      - manufacturer
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: string
+        featured:
+          type: string
+        rating:
+          type: string
+        manufacturer:
+          type: string
+      example:
+        name: fellar_necklace
+        price: '3.50'
+        featured: 'true'
+        rating: '3.1'
+        manufacturer: Calibaba
+    editOneProductRequest:
+      title: editOneProductRequest
+      required:
+      - name
+      - price
+      - rating
+      - manufacturer
+      - featured
+      - shipping_status
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: string
+        rating:
+          type: string
+        manufacturer:
+          type: string
+        featured:
+          type: string
+        shipping_status:
+          type: string
+      example:
+        name: renamed cat product
+        price: '3.45'
+        rating: '2.1'
+        manufacturer: SnifflyOne
+        featured: 'false'
+        shipping_status: shipped
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+  description: ''
+- name: Products
+  description: ''

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fellar Sniffles Site</title>
+</head>
+
+<body>
+    <h1>Fellar Sniffles Site</h1>
+    <button type="button" id="logoff" style="display:none;">logoff</button>
+    <hr>
+    <p id="message"></p>
+    <hr>
+    <div id="login-register" style="display:none;">
+        <button type="button" id="login">login</button>
+        <button type="button" id="register">register</button>
+    </div>
+    <div id="login-div" style="display:none;">
+        <form>
+            <div>
+                <label for="email">email:</label>
+                <input type="email" id="email">
+            </div>
+            <div>
+                <label for="password">password:</label>
+                <input type="password" id="password">
+            </div>
+            <button type="button" id="login-button">login</button>
+            <button type="button" id="login-cancel">cancel</button>
+        </form>
+    </div>
+    <div id="register-div" style="display:none;">
+        <form>
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div>
+                <label for="account_type">What would you like to do?</label>
+                <select id="account_type">
+                  <option value="buyer">I would like to purchase. Please register a 'buyer' account</option>
+                  <option value="seller">I would like to sell some products. Please register a 'seller' account</option>
+                  <option value="shipper">I would like to ship products. Please create a 'shipper' account</option>
+                </select>
+            </div>
+            <div>
+                <label for="email1">Email:</label>
+                <input type="email" id="email1">
+            </div>
+            <div>
+                <label for="password1">Password:</label>
+                <input type="password" id="password1">
+            </div>
+            <div>
+                <label for="password2">Verify password:</label>
+                <input type="password" id="password2">
+            </div>
+            <button type="button" id="register-button">register</button>
+            <button type="button" id="register-cancel">cancel</button>
+        </form>
+    </div>
+    <div id="products" style="display:none;">
+        <p id="products-message"></p>
+        <table id="products-table" style="display:none;">
+            <tr id="products-table-header">
+                <th>Product</th>
+                <th>Price</th>
+                <th>Featured</th>
+                <th>Rating</th>
+                <th>Created On</th>
+                <th>Manufacturer</th>
+                <th>Shipping Status</th>
+                <th>User Name</th>
+                <th colspan="2"></th>
+            </tr>
+        </table>
+        <button type="button" id="add-product">Add Product</button>
+        <button type="button" id="my-products-only">View My Products Only</button>
+    </div>
+    <div id="edit-product" style="display:none;">
+        <form>
+            <div>
+                <label for="product">Product:</label>
+                <input type="text" id="product">
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price">
+            </div>
+            <div>
+              <label for="featured">Featured?</label>
+              <select id="featured">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div>
+                <label for="rating">Rating:</label>
+                <input type="number" id="rating">
+            </div>
+            <div>
+                <!-- <span id="created-on">Created On:</span> -->
+           
+            </div>
+            <div>
+                <label for="manufacturer">Manufacturer:</label>
+                <input type="text" id="manufacturer">
+            </div>
+            <div>
+                <label for="shipping-status">Shipping Status:</label>
+                <select id="shipping-status">
+                    <option value="ordered">Ordered</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <button type="button" id="adding-product">Add</button>
+            <button type="button" id="edit-cancel">Cancel</button>
+        </form>
+    </div>
+    <script type = 'module' src="./products.js"></script>
+</body>
+</html>
