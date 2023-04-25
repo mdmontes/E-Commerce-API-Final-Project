@@ -1,0 +1,77 @@
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+button#logoff,
+button#dyslexia-friendly {
+  display: inline-block; /* Display buttons as inline blocks */
+  margin-right: 10px; /* Add margin right to create space between buttons */
+}
+
+/* Adjust spacing between buttons and other elements */
+h1,
+hr,
+p#message {
+  margin-bottom: 10px; /* Add margin bottom to create space between elements */
+}
+
+table {
+  border-collapse: collapse; /* Collapse the borders to avoid double borders */
+  border: 1px solid #000000; /* Set the border color to black */
+  width: 100%; /* Set the table width to 100% */
+}
+
+th, td {
+  border: 1px solid #000000; /* Set the border color for table headers and cells to black */
+  padding: 8px; /* Add padding to table headers and cells for better spacing */
+  text-align: left; /* Set text alignment to left for table headers and cells */
+  font-size: 15px;
+}
+
+#products-table-header th {
+  background-color: #000000; /* Set the background color for table headers to black */
+  color: #ffffff; /* Set the text color for table headers to white */
+  font-size: 18px;
+}
+
+/* CSS file for styling the given table columns */
+#products-table-header th:nth-child(2),
+#products-table-header th:nth-child(3),
+#products-table-header th:nth-child(4),
+#products-table-header th:nth-child(9) {
+  text-align: center; /* Center-align the text in the specified columns */
+}
+
+#add-product,
+#my-products-only {
+  margin-top: 20px; /* Add margin on top to create space between the buttons and the table */
+}
+
+/* CSS for input fields in the form */
+form div {
+  margin-bottom: 10px; /* Add margin bottom to create space between input fields */
+}
+
+form label {
+  display: block; /* Make labels block level to stack them above input fields */
+  margin-bottom: 5px; /* Add margin bottom to create space between labels and input fields */
+}
+
+form input,
+form select {
+  width: 50%; /* Set input fields and select to 100% width within their parent div */
+  padding: 5px; /* Add padding for better visual appearance */
+  padding-right: 20px; /* Add padding to the right to create space between the arrow and right edge */
+  box-sizing: border-box; /* Include padding in width calculation */
+  font-size: 18px; /* Example font size for input fields */
+}
+
+form input[type="number"]::-webkit-inner-spin-button,
+form input[type="number"]::-webkit-outer-spin-button {
+  margin-right: -20px; /* Adjust margin-right to position the arrow within the input field */
+}
+
+button {
+  font-size: 15px;
+}
