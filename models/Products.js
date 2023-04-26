@@ -6,19 +6,21 @@ const productSchema = new mongoose.Schema({
     required: [true, 'product name must be provided'],
   },
 
-  accountType: {
-    type: String,
-    enum: ['seller', 'shipper', 'buyer'],
-    default: 'seller'},
-
   price: {
     type: Number,
     required: [true, 'product price must be provided'],
   },
   featured: {
+    type: String,
+    enum: ['Yes','No'],
+    default: false,
+  },
+
+  Purchased: {
     type: Boolean,
     default: false,
   },
+
   rating: {
     type: Number,
     default: 4.5,

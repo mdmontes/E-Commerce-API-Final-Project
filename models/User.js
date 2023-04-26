@@ -29,6 +29,32 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'Please provide password'],
     minlength: 6,
   },
+
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other'],
+    },
+
+  birthdate: {
+    type: Date
+  },
+
+  address: {
+    type: String,
+    required: [true, 'Please provide name'],
+    maxlength: 50,
+    minlength: 3,
+  },
+
+  zipCode: {
+    type: String,
+    required: [true, 'Please provide name'],
+    maxlength: 50,
+    minlength: 3,
+  },
+
+
+
 })
 
 UserSchema.pre('save', async function () {
