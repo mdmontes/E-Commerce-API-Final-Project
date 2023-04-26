@@ -6,15 +6,20 @@ const {Product} = require('../models/Products')
 
 const createProduct = async (req, res) =>{
   const {
-    user: { userId, name },
+    user: { userId, userName },
+    body:{name, price, manufacturer},
   } = req;
 
- const productSellerInfo = {seller_ID: userId, seller_name:name };
- const productBody = req.body;
+  if (!name ||!price ||!manufacturer){
+    throw new BadRequestError(`Bad Request Error. Check to make sure you properly modified the NAME, PRICE, and/or MANUFACTURER`)
+  };
 
- if (productBody.price< 0){
-  throw new BadRequestError('Price cannot be negative. Please submit a new price')
- }
+  if (productBody.price< 0){
+    throw new BadRequestError('Price cannot be negative. Please submit a new price')
+   }
+
+  const productSellerInfo = {seller_ID: userId, seller_name:userName };
+  const productBody = req.body;
 
   Object.assign(productBody,productSellerInfo)
 
@@ -39,22 +44,20 @@ const getOneProductSeller = async (req, res) =>{
 
 const editOneProduct = async (req, res) =>{
   const {
-    body:{name, price, manufacturer},
     user: { userId },
     params: { id: productID },
   } = req
 
-  if (!name ||!price ||!manufacturer){
-    throw new BadRequestError(`Bad Request Error. Check to make sure you properly modified the NAME, PRICE, and/or MANUFACTURER`)
+  const productCheck = await Product.findOne({_id: productID})
+  if (productCheck.purchased){
+    throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}`)
   }
 
   const product = await Product.findByIdAndUpdate(
-    {_id: productID, createdBy_ID: userId },
+    {_id: productID, seller_ID: userId },
     req.body,
-    { new: true, runValidators: true })
-  
-  if (!product) {
-    throw new NotFoundError(`No product with id ${productID}`)}
+    { new: true, runValidators: true });
+
 
   res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
 }

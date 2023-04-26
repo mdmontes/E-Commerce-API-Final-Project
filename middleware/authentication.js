@@ -15,8 +15,8 @@ const autheticateToken = async (req,res,next) =>{
   jwt.verify(token, process.env.JWT_SECRET,(error,decoded)=>{
     if (error) {
       throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided`)};
-    const {name, userId, accountType} = decoded 
-    req.user = {name, userId, accountType};
+    const {userName, userId, accountType} = decoded 
+    req.user = {userName, userId, accountType};
     next()
   })
 }

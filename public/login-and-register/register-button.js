@@ -31,7 +31,7 @@ export const registerButtonActive = async (
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: name.value,
+          userName: name.value,
           email: email1.value,
           password: password1.value,
           accountType: accountType.value,
