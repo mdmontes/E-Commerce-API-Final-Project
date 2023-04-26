@@ -30,7 +30,7 @@ const buyOneProduct = async (req, res) =>{
   const {
     user: { userId, userName },
     params: { id: productID },
-    body:{ purchased: purchased}
+    body:{ purchased: purchased, shipping_status: shipping_status}
   } = req;
   
   const productCheck = await Product.findOne({_id: productID});
@@ -40,7 +40,7 @@ const buyOneProduct = async (req, res) =>{
   }else{
       const products = await Product.findByIdAndUpdate(
         {_id: productID},
-        {buyer_ID: userId, buyer_name: userName, purchased: purchased},
+        {buyer_ID: userId, buyer_name: userName, purchased: purchased, shipping_status: shipping_status},
         { new: true, runValidators: true }
         )
       res.status(StatusCodes.OK).json(products);

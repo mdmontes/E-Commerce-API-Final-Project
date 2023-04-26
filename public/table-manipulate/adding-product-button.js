@@ -88,7 +88,7 @@ export const addingProductButton = async(
         featured.value = "false";
         rating.value="";
         manufacturer.value ="";
-        shippingStatus.value ="ordered";
+        shippingStatus.value ="Ordered";
         thisEvent = new Event("startDisplay");
         document.dispatchEvent(thisEvent);
       } else {
@@ -110,7 +110,8 @@ export const addingProductButton = async(
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          purchased: true
+          purchased: true,
+          shipping_status: 'Ordered'
         }),
       });
       const data = await response.json();
@@ -122,7 +123,7 @@ export const addingProductButton = async(
         featured.value = "false";
         rating.value="";
         manufacturer.value ="";
-        shippingStatus.value ="ordered";
+        shippingStatus.value ="Ordered";
         thisEvent = new Event("startDisplay");
         document.dispatchEvent(thisEvent);
       } else {
