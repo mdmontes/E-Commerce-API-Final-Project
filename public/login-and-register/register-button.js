@@ -18,11 +18,6 @@ export const registerButtonActive = async (
   if (password1.value != password2.value) {
     message.textContent = "The passwords entered do not match.";
   } else {
-    console.log(name);
-    console.log(name.value);
-    console.log(birthDate);
-    console.log(birthDate.value);
-
     suspendInput = true;
     try {
       const response = await fetch("/api/v1/auth/register", {
@@ -63,7 +58,6 @@ export const registerButtonActive = async (
         message.textContent = data.msg;
       }
     } catch (err) {
-      console.log(err)
       message.textContent = "A communications error occurred.";
     }
     suspendInput = false;

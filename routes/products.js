@@ -38,6 +38,7 @@ router.route('/seller').post(createProduct);
 
 //Routes to Buyers:
 router.route('/buyer/:id').get(getOneProductBuyer);
+router.route('/buyer/:id').patch(editRating);
 router.route('/buy/:id').patch(buyOneProduct);
 
 //Routes to Shippers:

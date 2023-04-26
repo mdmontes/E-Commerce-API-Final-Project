@@ -14,8 +14,6 @@ export const addingProductButton = async(
   edit_delete,
   responseAccountType) => {
   
-  console.log(`the edit delete value is ${edit_delete}`);
-
   if (!editproduct.dataset.id) {
     // this is an attempted add
     if (responseAccountType == 'seller'){
@@ -54,7 +52,6 @@ export const addingProductButton = async(
           message.textContent = data.msg;
         }
       } catch (err) {
-        console.log(err)
         message.textContent = "A communication error occurred.";
       }
     } else{
@@ -96,7 +93,6 @@ export const addingProductButton = async(
         document.dispatchEvent(thisEvent);
       } else {
         message.textContent = data.msg;
-        console.log(`this line is getting executed after rating was denied`)
       }
     } catch (err) {
       message.textContent = "A communication error occurred.";
@@ -104,7 +100,6 @@ export const addingProductButton = async(
   }
   else if(edit_delete === 'purchase button pressed') {
     // this is an update
-    console.log(`we should be seeing the edit_delete button as ${edit_delete}`)
     suspendInput = true;
     try {
       const productID = editproduct.dataset.id;
@@ -174,6 +169,5 @@ export const addingProductButton = async(
     }
   }
   suspendInput = false;
-  console.log(showing.style.display)
 return {showing ,message, suspendInput,responseAccountType, edit_delete}
 }

@@ -1,11 +1,8 @@
 export const buildProductsTable = async (productsTable, productsTableHeader, token, message, myproducts,getRoute) => {
   if(myproducts){
     getRoute = '/api/v1/products/myproducts';
-    console.log(getRoute)
   } else{
-    getRoute ='/api/v1/products'
-    console.log(myproducts)
-    console.log(getRoute)
+    getRoute ='/api/v1/products';
   }
   try {
     const response = await fetch(`
@@ -48,7 +45,6 @@ export const buildProductsTable = async (productsTable, productsTableHeader, tok
       return 0;
     }
   } catch (err) {
-    console.log(err)
     message.textContent = "A communication error occurred.";
     return 0;
   }

@@ -40,7 +40,10 @@ const editShipping = async (req, res) =>{
 
   if (productBody.shipping_status == 'On Sale'){
     throw new BadRequestError(`Once a product has been ordered, shippers cannot change the shipping status back to ${productBody.shipping_status}`)
+  }
 
+  if (productBody.rating){
+    throw new BadRequestError(`This product was already received and rated by buyer. You cannot change the status of this product`)
   }
 
   const product = await Product.findByIdAndUpdate(

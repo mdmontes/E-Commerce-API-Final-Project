@@ -69,6 +69,7 @@ const deleteOneProduct = async (req, res) =>{
   } = req
 
   const productCheck = await Product.findOne({_id: productID})
+
   if (productCheck.purchased){
     throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}. Sellers cannot delete the product after it has been purchased`)
   }

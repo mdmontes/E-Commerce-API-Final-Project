@@ -24,8 +24,6 @@ export const viewProductButton =async (
   manufacturer.disabled = false
   shippingStatus.disabled = false;
   
-  console.log(showing.style.display)
-  console.log(responseAccountType)
   editproduct.dataset.id = e.target.dataset.id
   try {
     const response = await fetch(`/api/v1/products/${responseAccountType}/${e.target.dataset.id}`, {

@@ -17,7 +17,6 @@ const getOneProductBuyer = async (req, res) =>{
   }else{
     const productCheckString = JSON.stringify(productCheck.buyer_ID);
     const productCheckClean = productCheckString.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
-    console.log(`the productcheck string is ${productCheckString}`)
     if (productCheckClean===userId){
       const products = await Product.findOne({_id: productID});
       res.status(StatusCodes.OK).json(products);
@@ -34,8 +33,6 @@ const buyOneProduct = async (req, res) =>{
     body:{ purchased: purchased}
   } = req;
   
-  console.log(`Testing buyOne route for ${userName}`);
-
   const productCheck = await Product.findOne({_id: productID});
 
   if (productCheck.purchased){
@@ -52,26 +49,27 @@ const buyOneProduct = async (req, res) =>{
 }
 
 const editRating = async (req, res) =>{
+
   const {
-    body:{name, price, manufacturer},
     user: { userId },
     params: { id: productID },
   } = req
 
-
-  const product = await Product.findByIdAndUpdate(
-    {_id: productID, createdBy_ID: userId },
-    req.body,
-    { new: true, runValidators: true })
+  const productBody = req.body;
   
-  if (!product) {
-    throw new NotFoundError(`No product with id ${productID}`)}
-
-  res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
+  if(productBody.shipping_status === 'Shipped'){
+    const product = await Product.findByIdAndUpdate(
+      {_id: productID, buyer_ID: userId },
+      productBody,
+      { new: true, runValidators: true })
+    res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
+  } else{
+    throw new BadRequestError(`You have not received this product. Wait until your product has been delivered.`)
+  }
 }
 
 module.exports = {
   getOneProductBuyer,
   buyOneProduct,
-  editRating,
+  editRating
 }

@@ -67,10 +67,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("startDisplay", async () => {
     showing = loginRegister;
-    console.log(loginRegister)
     token = localStorage.getItem("token");
     responseAccountType = localStorage.getItem("responseAccountType");
-    console.log(`testing to see if the response account type is ${responseAccountType}`)
     if (token) {
       //if the user is logged in
       logoff.style.display = "block";
@@ -128,8 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       showing.style.display = "none";
       loginRegister.style.display = "block";
       showing = loginRegister;
-      console.log(showing)
-      console.log(typeof showing)
       email.value = "";
       password.value = "";
       name.value = "";
@@ -175,12 +171,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!myProductsOnly){
         viewMyProduct.textContent = 'View All Products in Market'
         myProductsOnly = true;
-        console.log('clicked myproducts so that its true')
       }
       else if(myProductsOnly){
         viewMyProduct.textContent = 'View My Products Only'
         myProductsOnly = false;
-        console.log('clicked myproducts so that its false')
       }
       showing.style.display = "none";
       thisEvent = new Event("startDisplay");
@@ -194,18 +188,12 @@ document.addEventListener("DOMContentLoaded", () => {
       manufacturer.disabled = false
       shippingStatus.disabled = true;
 
-      console.log(responseAccountType)
       if(responseAccountType =='seller'){
         addingproduct.style.visibility = 'visible';
         deleteproduct.style.display = 'none';
         buyproduct.style.display= 'none';
-
-        console.log(` add clicked addingproduct is ${addingproduct.style.visibility}`);
-        console.log(` add clicked deleteproduct is ${deleteproduct.style.visibility}`)
         editproduct.style.display = "block";
-
         showing.style.display = "none";
-        console.log(`pressed add product`);
         showing = editproduct;
         delete editproduct.dataset.id;
         product.value = "";
@@ -226,7 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     } else if (e.target === editCancel) {
-      console.log('edit cancel being pressed')
       showing.style.display = "none";
       product.value = "";
       price.value = "";
@@ -238,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
       document.dispatchEvent(thisEvent);
 
     } else if (e.target === addingproduct) {
-       console.log(showing.style.display)
       let addingProductOutput = await addingProductButton(
         token,
         editproduct, 
@@ -265,9 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteproduct.style.display= "inline-block";
       buyproduct.style.display= 'inline-block';
 
-      console.log(` edit clicked addinproduct is ${addingproduct.style.visibility}`);
-      console.log(` edit clicked deleteproduct is ${deleteproduct.style.visibility}`);
-
       let viewProductOutput = await viewProductButton(
         e,
         editproduct,
@@ -287,17 +270,14 @@ document.addEventListener("DOMContentLoaded", () => {
         token,
         responseAccountType);
       showing = viewProductOutput.showing;
-      console.log(`the showing currently is ${showing.style.display}`)
       suspendInput = viewProductOutput.suspendInput;
       editproduct.dataset.id  = viewProductOutput.editproduct.dataset.id;
       edit_delete = viewProductOutput.edit_delete;
       responseAccountType = viewProductOutput.responseAccountType
     }
     else if (e.target === deleteproduct) {
-      console.log(`trying to delete and the response account type is ${responseAccountType}`)
       if (responseAccountType == 'seller'){
         edit_delete = 'delete button pressed';
-        console.log(showing.style.display)
         let addingProductOutput = await addingProductButton(
           token,
           editproduct, 
@@ -324,10 +304,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     else if (e.target === buyproduct) {
-      console.log(`trying to buy and the response account type is ${responseAccountType}`)
       if (responseAccountType == 'buyer'){
         edit_delete = 'purchase button pressed';
-        console.log(showing.style.display)
         let addingProductOutput = await addingProductButton(
           token,
           editproduct, 
@@ -344,7 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
           edit_delete,
           responseAccountType)
         edit_delete = addingProductOutput.edit_delete;
-        console.log(`Edit delete after purchase rejected is ${edit_delete}`)
         showing = addingProductOutput.showing;
         suspendInput = addingProductOutput.suspendInput;
         // editproduct.dataset.id  = addingProductOutput.editproduct.dataset.id;

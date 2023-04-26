@@ -2,7 +2,6 @@
 
 export 
 const logOff = async () => {
-  console.log(`testing to make sure this function works`)
 }
 
 export const testingVariable = ' testing to make sure this variable works'
