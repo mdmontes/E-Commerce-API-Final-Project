@@ -56,6 +56,9 @@ const editRating = async (req, res) =>{
   } = req
 
   const productBody = req.body;
+  if (productBody.rating <0){
+    throw new BadRequestError('You cannot give a negative rating.')
+  }
   
   if(productBody.shipping_status === 'Shipped'){
     const product = await Product.findByIdAndUpdate(
