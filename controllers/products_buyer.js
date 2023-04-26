@@ -2,25 +2,57 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError} = require('../errors')
 const {Product} = require('../models/Products')
 
-const getAllProducts = async (req, res) =>{
-  const products = await Product.find({ createdBy_ID: req.user.userId }).sort('createdAt')
-  res.status(StatusCodes.OK).json({ products, count: products.length });
-}
 
-
-const getOneProduct = async (req, res) =>{
+const getOneProductBuyer = async (req, res) =>{
   const {
-    user: { userId },
+    user: {userId},
     params: { id: productID },
   } = req
+
+  const productCheck = await Product.findOne({_id: productID})
   
-  const products = await Product.findOne({_id: productID, createdBy_ID: userId })
+  console.log(`the productcheck string is ${productCheck}`)
 
-  if (!products || products === null) {
-    throw new NotFoundError(`No product with id ${productID}`)}
-
-  res.status(StatusCodes.OK).json(products);
+  if (!productCheck.buyer_ID){
+    const products = await Product.findOne({_id: productID})
+    res.status(StatusCodes.OK).json(products);
+  }else{
+    const productCheckString = JSON.stringify(productCheck.buyer_ID);
+    const productCheckClean = productCheckString.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+    console.log(`the productcheck string is ${productCheckString}`)
+    if (productCheckClean===userId){
+      const products = await Product.findOne({_id: productID});
+      res.status(StatusCodes.OK).json(products);
+    }else{
+      throw new NotFoundError(`This product whas purchased by someone else. You cannot view this product`);
+    }
+  }
 }
+
+const buyOneProduct = async (req, res) =>{
+  const {
+    user: { userId, name },
+    params: { id: productID },
+    body:{ purchased: purchased}
+  } = req;
+  
+  console.log(`Testing buyOne route for ${name}`);
+
+  const productCheck = await Product.findOne({_id: productID});
+
+  if (productCheck.purchased){
+    throw new BadRequestError(`This product was already purchased. You cannot purchase this product again`);
+  }else{
+      const products = await Product.findByIdAndUpdate(
+        {_id: productID},
+        {buyer_ID: userId, buyer_name:name, purchased: purchased},
+        { new: true, runValidators: true }
+        )
+      res.status(StatusCodes.OK).json(products);
+  };
+
+}
+
 
 const editRating = async (req, res) =>{
   const {
@@ -29,9 +61,6 @@ const editRating = async (req, res) =>{
     params: { id: productID },
   } = req
 
-  if (!name ||!price ||!manufacturer){
-    throw new BadRequestError(`Bad Request Error. Check to make sure you properly modified the NAME, PRICE, and/or MANUFACTURER`)
-  }
 
   const product = await Product.findByIdAndUpdate(
     {_id: productID, createdBy_ID: userId },
@@ -45,7 +74,7 @@ const editRating = async (req, res) =>{
 }
 
 module.exports = {
-  getAllProducts,
-  getOneProduct,
+  getOneProductBuyer,
+  buyOneProduct,
   editRating,
 }

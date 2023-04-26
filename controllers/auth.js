@@ -6,7 +6,7 @@ const register = async(req, res)=>{
   // const {name, email ,password} = req.body
   const user = await User.create(req.body)
   const token = user.createJWT()
-  res.status(StatusCodes.CREATED).json({msg: `the user ${user.name} was created with account type ${user.accountType}`, token});
+  res.status(StatusCodes.CREATED).json({msg: `the user ${user.name} was created with account type ${user.accountType}`, token, accountType: user.accountType});
   ;
 }
 
@@ -27,7 +27,7 @@ const login = async(req, res)=>{
   }
 
   const token = user.createJWT()
-  res.status(StatusCodes.OK).json({msg: `the user ${user.name} has logged on with account type ${user.accountType}`, token});
+  res.status(StatusCodes.OK).json({msg: `the user ${user.name} has logged on with account type ${user.accountType}`, token, accountType: user.accountType});
 }
 
 module.exports = {

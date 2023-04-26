@@ -2,29 +2,37 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError} = require('../errors')
 const {Product} = require('../models/Products')
 
-const getAllMyProducts = async (req, res) =>{
-  const products = await Product.find({ createdBy_ID: req.user.userId }).sort('createdAt')
-  res.status(StatusCodes.OK).json({ products, count: products.length });
-}
+
 
 const createProduct = async (req, res) =>{
-  req.body.createdBy_ID = req.user.userId
-  req.body.user_name = req.user.name
-  const product = await Product.create(req.body) 
+  const {
+    user: { userId, name },
+  } = req;
+
+ const productSellerInfo = {seller_ID: userId, seller_name:name };
+ const productBody = req.body;
+
+ if (productBody.price< 0){
+  throw new BadRequestError('Price cannot be negative. Please submit a new price')
+ }
+
+  Object.assign(productBody,productSellerInfo)
+
+  const product = await Product.create(productBody) ;
   res.status(StatusCodes.CREATED).json({product, msg:`the product ${product.name} was created`});
 }
 
-const getOneProduct = async (req, res) =>{
+const getOneProductSeller = async (req, res) =>{
 
   const {
     user: { userId },
     params: { id: productID },
   } = req
   
-  const products = await Product.findOne({_id: productID, createdBy_ID: userId })
+  const products = await Product.findOne({_id: productID, seller_ID: userId })
 
   if (!products || products === null) {
-    throw new NotFoundError(`No product with id ${productID}`)}
+    throw new NotFoundError(`This product could not be viewed because it does not belong to this seller`)}
 
   res.status(StatusCodes.OK).json(products);
 }
@@ -68,9 +76,8 @@ const deleteOneProduct = async (req, res) =>{
 }
 
 module.exports = {
-  getAllMyProducts,
   createProduct,
-  getOneProduct,
+  getOneProductSeller,
   editOneProduct,
   deleteOneProduct,
 }

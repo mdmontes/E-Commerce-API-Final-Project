@@ -10,13 +10,14 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'product price must be provided'],
   },
+  
   featured: {
     type: String,
     enum: ['Yes','No'],
     default: false,
   },
 
-  Purchased: {
+  purchased: {
     type: Boolean,
     default: false,
   },

@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(loginRegister)
     token = localStorage.getItem("token");
     responseAccountType = localStorage.getItem("responseAccountType");
+    console.log(`testing to see if the response account type is ${responseAccountType}`)
     if (token) {
       //if the user is logged in
       logoff.style.display = "block";
