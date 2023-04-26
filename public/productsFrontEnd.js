@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("startDisplay", async () => {
     showing = loginRegister;
+    console.log(loginRegister)
     token = localStorage.getItem("token");
     responseAccountType = localStorage.getItem("responseAccountType");
     if (token) {

@@ -10,9 +10,13 @@ const getAllProducts = async (req, res) =>{
 
 
 const getAllMyProducts = async (req, res) =>{
+
   const {
     user: { userId, accountType },
   } = req
+
+  console.log(`the account type is ${accountType}`)
+
 
   if (accountType === 'seller'){
     const products = await Product.find({ seller_ID: userId }).sort('createdAt');

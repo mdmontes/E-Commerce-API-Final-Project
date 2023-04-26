@@ -48,7 +48,7 @@ export const addingProductButton = async(
           featured.value = "false";
           rating.value="";
           manufacturer.value ="";
-          shippingStatus.value ="ordered";
+          shippingStatus.value ='';
         } else {
           // failure
           message.textContent = data.msg;

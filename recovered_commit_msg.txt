@@ -1,0 +1,28 @@
+https://github.com/mdmontes/E-Commerce-API-Final-Project.git
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   controllers/auth.js
+#	modified:   controllers/products_buyer.js
+#	modified:   controllers/products_seller.js
+#	modified:   controllers/products_shipper.js
+#	modified:   middleware/authentication.js
+#	modified:   models/Products.js
+#	modified:   models/User.js
+#	modified:   public/index.html
+#	deleted:    public/log-off.js
+#	deleted:    public/products.js
+#	modified:   routes/products.js
+#
+# Untracked files:
+#	controllers/getALL_products.js
+#	public/build-prod-table.js
+#	public/login-and-register/
+#	public/productsFrontEnd.js
+#	public/styles.css
+#	public/table-manipulate/
+#

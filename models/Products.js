@@ -33,18 +33,36 @@ const productSchema = new mongoose.Schema({
 
   shipping_status: {
     type: String,
-    enum: ['ordered', 'shipped', 'completed'],
-    default: 'ordered'},
+    enum: ['On Sale','Ordered','On Route', 'Shipped'],
+    default: 'On Sale'},
   
-  user_name: {
+  seller_name: {
     type: String,
-    required: [true, 'user_name must be created must be provided']},
+    },
 
-  createdBy_ID: {
+  seller_ID: {
     type: mongoose.Types.ObjectId,
     ref: 'User',
-    required: [true, 'Please provide user']
-    }},
+    },
+
+  shipper_name: {
+    type: String,
+    },
+
+  shipper_ID: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    },
+  
+  buyer_name: {
+    type: String,
+    },
+
+  buyer_ID: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    }
+  },
 
     { timestamps: true })
 
