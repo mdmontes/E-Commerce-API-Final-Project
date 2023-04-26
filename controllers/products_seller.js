@@ -10,16 +10,16 @@ const createProduct = async (req, res) =>{
     body:{name, price, manufacturer},
   } = req;
 
+  const productSellerInfo = {seller_ID: userId, seller_name:userName };
+  const productBody = req.body;
+
   if (!name ||!price ||!manufacturer){
     throw new BadRequestError(`Bad Request Error. Check to make sure you properly modified the NAME, PRICE, and/or MANUFACTURER`)
   };
 
   if (productBody.price< 0){
     throw new BadRequestError('Price cannot be negative. Please submit a new price')
-   }
-
-  const productSellerInfo = {seller_ID: userId, seller_name:userName };
-  const productBody = req.body;
+   };
 
   Object.assign(productBody,productSellerInfo)
 
@@ -50,7 +50,7 @@ const editOneProduct = async (req, res) =>{
 
   const productCheck = await Product.findOne({_id: productID})
   if (productCheck.purchased){
-    throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}`)
+    throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}. Sellers cannot change the product after it has been purchased`)
   }
 
   const product = await Product.findByIdAndUpdate(
@@ -68,12 +68,14 @@ const deleteOneProduct = async (req, res) =>{
     params: { id: productID },
   } = req
 
+  const productCheck = await Product.findOne({_id: productID})
+  if (productCheck.purchased){
+    throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}. Sellers cannot delete the product after it has been purchased`)
+  }
+
   const products = await Product.findOneAndDelete({
     _id: productID, 
-    createdBy_ID: userId })
-
-  if (!products) {
-    throw new NotFoundError(`No product with id ${productID}`)}
+    seller_ID: userId })
 
   res.status(StatusCodes.OK).json({msg: `The product ${products.name} with productid was deleted`});  
 }

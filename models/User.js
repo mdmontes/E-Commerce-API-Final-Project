@@ -53,8 +53,6 @@ const UserSchema = new mongoose.Schema({
     minlength: 3,
   },
 
-
-
 })
 
 UserSchema.pre('save', async function () {

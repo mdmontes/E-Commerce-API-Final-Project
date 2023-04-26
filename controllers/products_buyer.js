@@ -11,8 +11,6 @@ const getOneProductBuyer = async (req, res) =>{
 
   const productCheck = await Product.findOne({_id: productID})
   
-  console.log(`the productcheck string is ${productCheck}`)
-
   if (!productCheck.buyer_ID){
     const products = await Product.findOne({_id: productID})
     res.status(StatusCodes.OK).json(products);
@@ -52,7 +50,6 @@ const buyOneProduct = async (req, res) =>{
   };
 
 }
-
 
 const editRating = async (req, res) =>{
   const {
