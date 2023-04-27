@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
         message)
       message.textContent = logOffOutput.message.textContent
       showing = logOffOutput.showing
+      logoff.style.display = "none"
     } else if (e.target === login) {
       showing = await logIn(showing, loginDiv)
     } else if (e.target === register) {
@@ -202,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
         rating.value="";
         manufacturer.value ="";
         shippingStatus.value ="ordered";
-        addingproduct.textContent = "add";
+        addingproduct.textContent = "Add";
         } else{
           message.textContent = 'You must have the account type SELLER to create products'
           product.disabled = false;
@@ -262,7 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
         rating, 
         manufacturer, 
         shippingStatus,
-        deleteproduct, 
         addingproduct, 
         edit_delete, 
         message, 
@@ -324,8 +324,6 @@ document.addEventListener("DOMContentLoaded", () => {
         edit_delete = addingProductOutput.edit_delete;
         showing = addingProductOutput.showing;
         suspendInput = addingProductOutput.suspendInput;
-        // editproduct.dataset.id  = addingProductOutput.editproduct.dataset.id;
-        // edit_delete = addingProductOutput.edit_delete;
       } else{
         message.textContent = 'You must have the account type BUYER to purchase products';
         edit_delete = 'edit button pressed'

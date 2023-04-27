@@ -67,7 +67,7 @@ const editRating = async (req, res) =>{
       { new: true, runValidators: true })
     res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
   } else{
-    throw new BadRequestError(`You have not received this product. Wait until your product has been delivered.`)
+    throw new BadRequestError(`You have either not purchased, or you have not received this product. Wait until your product has been delivered if you purchased it. If you have not purchased the product, you must purchase it first.`)
   }
 }
 

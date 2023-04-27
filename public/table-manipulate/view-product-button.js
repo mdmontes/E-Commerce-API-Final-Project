@@ -9,7 +9,6 @@ export const viewProductButton =async (
   rating, 
   manufacturer, 
   shippingStatus,
-  deleteproduct, 
   addingproduct, 
   edit_delete, 
   message, 
@@ -62,13 +61,10 @@ export const viewProductButton =async (
       showing.style.display = "none";
       showing = editproduct;
       showing.style.display = "block";
-      addingproduct.textContent = "update";
-      // updateproduct.style.display ="block";
-      // deleteproduct.style.display ="block";
+      addingproduct.textContent = "Update";
       edit_delete = 'edit button pressed';
       message.textContent = "";
     } else {
-      // might happen if the list has been updated since last display
       message.textContent = data.msg;
       thisEvent = new Event("startDisplay");
       document.dispatchEvent(thisEvent);

@@ -48,6 +48,12 @@ const editOneProduct = async (req, res) =>{
     params: { id: productID },
   } = req
 
+  const productBody = req.body;
+
+  if (productBody.price< 0){
+    throw new BadRequestError('Price cannot be negative. Please submit a new price')
+   };
+
   const productCheck = await Product.findOne({_id: productID})
   if (productCheck.purchased){
     throw new BadRequestError(`This product was already purchased by ${productCheck.buyer_name}. Sellers cannot change the product after it has been purchased`)
@@ -55,7 +61,7 @@ const editOneProduct = async (req, res) =>{
 
   const product = await Product.findByIdAndUpdate(
     {_id: productID, seller_ID: userId },
-    req.body,
+    productBody,
     { new: true, runValidators: true });
 
 
