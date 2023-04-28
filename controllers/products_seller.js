@@ -38,8 +38,18 @@ const getOneProductSeller = async (req, res) =>{
 
   if (!products || products === null) {
     throw new NotFoundError(`This product could not be viewed because it does not belong to this seller`)}
+  
+  updatedProducts= {
+    name : products.name,
+    price: products.price,
+    featured: products.featured,
+    rating: products.rating,
+    manufacturer: products.manufacturer,
+    shipping_status: products.shipping_status,
+    _id: products._id
+  };
 
-  res.status(StatusCodes.OK).json(products);
+  res.status(StatusCodes.OK).json(updatedProducts);
 }
 
 const editOneProduct = async (req, res) =>{

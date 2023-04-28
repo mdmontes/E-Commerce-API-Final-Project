@@ -19,11 +19,21 @@ const getOneProductBuyer = async (req, res) =>{
     const productCheckClean = productCheckString.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
     if (productCheckClean===userId){
       const products = await Product.findOne({_id: productID});
-      res.status(StatusCodes.OK).json(products);
-    }else{
-      throw new NotFoundError(`This product whas purchased by someone else. You cannot view this product`);
+
+        updatedProducts= {
+          name : products.name,
+          price: products.price,
+          featured: products.featured,
+          rating: products.rating,
+          manufacturer: products.manufacturer,
+          shipping_status: products.shipping_status,
+          _id: products._id
+        };
+
+        res.status(StatusCodes.OK).json(updatedProducts);
+      } else{
+      throw new BadRequestError(`This product whas purchased by someone else. You cannot view this product`)}
     }
-  }
 }
 
 const buyOneProduct = async (req, res) =>{
@@ -65,7 +75,7 @@ const editRating = async (req, res) =>{
       {_id: productID, buyer_ID: userId },
       productBody,
       { new: true, runValidators: true })
-    res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
+    res.status(StatusCodes.OK).json({msg:`the product ${product.name} was updated`})
   } else{
     throw new BadRequestError(`You have either not purchased, or you have not received this product. Wait until your product has been delivered if you purchased it. If you have not purchased the product, you must purchase it first.`)
   }

@@ -11,19 +11,41 @@ const getOneProductShipper = async (req, res) =>{
   const productCheck = await Product.findOne({_id: productID})
   
   if (!productCheck.buyer_ID){
-    throw new NotFoundError(`This product has not been purchased. You can only view this product after a purchase has been made`);
+    throw new BadRequestError(`This product has not been purchased. You can only view this product after a purchase has been made`);
   }else if(!productCheck.shipper_ID){
     const products = await Product.findOne({_id: productID});
-    res.status(StatusCodes.OK).json(products)
+   
+    updatedProducts= {
+      name : products.name,
+      price: products.price,
+      featured: products.featured,
+      rating: products.rating,
+      manufacturer: products.manufacturer,
+      shipping_status: products.shipping_status,
+      _id: products._id
+    };
+
+    res.status(StatusCodes.OK).json(updatedProducts)
   }
   else{
     const productCheckString = JSON.stringify(productCheck.shipper_ID);
     const productCheckClean = productCheckString.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
     if (productCheckClean===userId){
       const products = await Product.findOne({_id: productID});
-      res.status(StatusCodes.OK).json(products);
+
+      updatedProducts= {
+        name : products.name,
+        price: products.price,
+        featured: products.featured,
+        rating: products.rating,
+        manufacturer: products.manufacturer,
+        shipping_status: products.shipping_status,
+        _id: products._id
+      };
+
+      res.status(StatusCodes.OK).json(updatedProducts);
     }else{
-      throw new NotFoundError(`This product is already being shipped by someone else. You cannot view this product`);
+      throw new BadRequestError(`This product is already being shipped by someone else. You cannot view this product`);
     }
   }
 }
