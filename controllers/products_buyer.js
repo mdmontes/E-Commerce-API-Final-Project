@@ -38,12 +38,12 @@ const buyOneProduct = async (req, res) =>{
   if (productCheck.purchased){
     throw new BadRequestError(`This product was already purchased. You cannot purchase this product again`);
   }else{
-      const products = await Product.findByIdAndUpdate(
+      const product = await Product.findByIdAndUpdate(
         {_id: productID},
         {buyer_ID: userId, buyer_name: userName, purchased: purchased, shipping_status: shipping_status},
         { new: true, runValidators: true }
         )
-      res.status(StatusCodes.OK).json(products);
+      res.status(StatusCodes.OK).json({msg:`the user ${product.buyer_name} has purchased ${product.name}`});
   };
 
 }

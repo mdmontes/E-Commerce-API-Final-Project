@@ -24,7 +24,7 @@ const createProduct = async (req, res) =>{
   Object.assign(productBody,productSellerInfo)
 
   const product = await Product.create(productBody) ;
-  res.status(StatusCodes.CREATED).json({product, msg:`the product ${product.name} was created`});
+  res.status(StatusCodes.CREATED).json({msg:`the product ${product.name} was created`});
 }
 
 const getOneProductSeller = async (req, res) =>{
@@ -65,7 +65,7 @@ const editOneProduct = async (req, res) =>{
     { new: true, runValidators: true });
 
 
-  res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated`})
+  res.status(StatusCodes.OK).json({ msg:`the product ${product.name} was updated`})
 }
 
 const deleteOneProduct = async (req, res) =>{
