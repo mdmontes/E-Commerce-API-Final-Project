@@ -1,12 +1,16 @@
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, NotFoundError} = require('../errors')
+const { BadRequestError, NotFoundError, UnauthenticatedError} = require('../errors')
 const {Product} = require('../models/Products')
 
 const getOneProductShipper = async (req, res) =>{
   const {
-    user: {userId},
+    user: {userId,accountType},
     params: { id: productID },
   } = req
+
+  if(accountType!=='shipper'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for shipper accounts only. Check to make sure you have logged in as a shipper`)
+  };
 
   const productCheck = await Product.findOne({_id: productID})
   
@@ -52,9 +56,13 @@ const getOneProductShipper = async (req, res) =>{
 
 const editShipping = async (req, res) =>{
   const {
-    user: { userId, userName },
+    user: { userId, userName, accountType },
     params: { id: productID },
   } = req
+
+  if(accountType!=='shipper'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for shipper accounts only. Check to make sure you have logged in as a shipper`)
+  };
 
   const productShipperInfo = {shipper_ID: userId, shipper_name:userName };
   const productBody = req.body;
@@ -75,8 +83,8 @@ const editShipping = async (req, res) =>{
   
   if (!product) {
     throw new NotFoundError(`No product with id ${productID}`)}
-
-  res.status(StatusCodes.OK).json({product, msg:`the product ${product.name} was updated by the shipper ${product.shipper_name}`})
+  
+  res.status(StatusCodes.OK).json({msg:`the product ${product.name} was updated by the shipper ${product.shipper_name}`})
 }
 
 
