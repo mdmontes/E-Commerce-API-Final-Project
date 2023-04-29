@@ -93,12 +93,13 @@ const editRating = async (req, res) =>{
     throw new BadRequestError('You cannot give a negative rating.')
   }
   
+
   if(productBody.shipping_status === 'Shipped'){
     const product = await Product.findByIdAndUpdate(
       {_id: productID, buyer_ID: userId },
       productBody,
       { new: true, runValidators: true })
-    res.status(StatusCodes.OK).json({msg:`the product ${product.name} was updated`})
+    res.status(StatusCodes.OK).json({msg:`the product ${product.name} was updated with a rating`})
   } else{
     throw new BadRequestError(`You have either not purchased, or you have not received this product. Wait until your product has been delivered if you purchased it. If you have not purchased the product, you must purchase it first.`)
   }
