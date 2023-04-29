@@ -12,8 +12,19 @@ const getOneProductBuyer = async (req, res) =>{
   const productCheck = await Product.findOne({_id: productID})
   
   if (!productCheck.buyer_ID){
-    const products = await Product.findOne({_id: productID})
-    res.status(StatusCodes.OK).json(products);
+    const products = await Product.findOne({_id: productID});
+   
+    updatedProducts= {
+      name : products.name,
+      price: products.price,
+      featured: products.featured,
+      rating: products.rating,
+      manufacturer: products.manufacturer,
+      shipping_status: products.shipping_status,
+      _id: products._id
+    };
+
+    res.status(StatusCodes.OK).json(updatedProducts);
   }else{
     const productCheckString = JSON.stringify(productCheck.buyer_ID);
     const productCheckClean = productCheckString.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
