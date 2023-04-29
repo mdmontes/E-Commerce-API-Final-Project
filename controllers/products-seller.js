@@ -1,14 +1,18 @@
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, NotFoundError} = require('../errors')
+const { BadRequestError, NotFoundError,UnauthenticatedError} = require('../errors')
 const {Product} = require('../models/Products')
 
 
 
 const createProduct = async (req, res) =>{
   const {
-    user: { userId, userName },
+    user: { userId, userName, accountType},
     body:{name, price, manufacturer},
   } = req;
+
+  if(accountType!=='seller'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for seller accounts only. Check to make sure you have logged in as a seller`)
+  }; 
 
   const productSellerInfo = {seller_ID: userId, seller_name:userName };
   const productBody = req.body;
@@ -30,10 +34,14 @@ const createProduct = async (req, res) =>{
 const getOneProductSeller = async (req, res) =>{
 
   const {
-    user: { userId },
+    user: { userId, accountType},
     params: { id: productID },
   } = req
   
+  if(accountType!=='seller'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for seller accounts only. Check to make sure you have logged in as a seller`)
+  }; 
+
   const products = await Product.findOne({_id: productID, seller_ID: userId })
 
   if (!products || products === null) {
@@ -54,9 +62,13 @@ const getOneProductSeller = async (req, res) =>{
 
 const editOneProduct = async (req, res) =>{
   const {
-    user: { userId },
+    user: { userId, accountType},
     params: { id: productID },
   } = req
+
+  if(accountType!=='seller'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for seller accounts only. Check to make sure you have logged in as a seller`)
+  }; 
 
   const productBody = req.body;
 
@@ -80,9 +92,13 @@ const editOneProduct = async (req, res) =>{
 
 const deleteOneProduct = async (req, res) =>{
   const {
-    user: { userId },
+    user: { userId, accountType },
     params: { id: productID },
   } = req
+
+  if(accountType!=='seller'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for seller accounts only. Check to make sure you have logged in as a seller`)
+  }; 
 
   const productCheck = await Product.findOne({_id: productID})
 

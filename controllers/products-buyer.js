@@ -1,13 +1,17 @@
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, NotFoundError} = require('../errors')
+const { BadRequestError, UnauthenticatedError, NotFoundError} = require('../errors')
 const {Product} = require('../models/Products')
 
 
 const getOneProductBuyer = async (req, res) =>{
   const {
-    user: {userId},
+    user: {userId, accountType},
     params: { id: productID },
   } = req
+
+  if(accountType!=='buyer'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for buyer accounts only. Check to make sure you have logged in as a buyer`)
+  }; 
 
   const productCheck = await Product.findOne({_id: productID})
   
@@ -49,10 +53,14 @@ const getOneProductBuyer = async (req, res) =>{
 
 const buyOneProduct = async (req, res) =>{
   const {
-    user: { userId, userName },
+    user: { userId, userName, accountType },
     params: { id: productID },
     body:{ purchased: purchased, shipping_status: shipping_status}
   } = req;
+  
+  if(accountType!=='buyer'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for buyer accounts only. Check to make sure you have logged in as a buyer`)
+  };
   
   const productCheck = await Product.findOne({_id: productID});
 
@@ -72,9 +80,13 @@ const buyOneProduct = async (req, res) =>{
 const editRating = async (req, res) =>{
 
   const {
-    user: { userId },
+    user: { userId, accountType },
     params: { id: productID },
   } = req
+
+  if(accountType!=='buyer'){
+    throw new UnauthenticatedError(`Token was recognized, but for this user and token, the following resource cannot be provided. This route is for buyer accounts only. Check to make sure you have logged in as a buyer`)
+  };
 
   const productBody = req.body;
   if (productBody.rating <0){

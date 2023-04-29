@@ -44,5 +44,5 @@ router.route('/buy/:id').patch(buyOneProduct);
 //Routes to Shippers:
 router.route('/shipper/:id').get(getOneProductShipper);
 router.route('/shipper/:id').patch(editShipping);
-
+``
 module.exports = router
