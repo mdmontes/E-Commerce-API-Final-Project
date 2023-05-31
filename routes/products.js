@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 // Get calls for all users
-const{getAllProducts, getAllMyProducts} = require('../controllers/getALL_products')
+const{getAllProducts, getAllMyProducts} = require('../controllers/getALL-products')
 
 // API Calls to Sellers
 const { 
@@ -10,20 +10,20 @@ const {
   getOneProductSeller, 
   editOneProduct, 
   deleteOneProduct
-} = require('../controllers/products_seller')
+} = require('../controllers/products-seller')
 
 //API Calls to Buyers
 const { 
   getOneProductBuyer,
   buyOneProduct,
   editRating,
-} = require('../controllers/products_buyer')
+} = require('../controllers/products-buyer')
 
 //API Calls to Shippers
 const { 
   getOneProductShipper,
   editShipping,
-} = require('../controllers/products_shipper')
+} = require('../controllers/products-shipper')
 
 //Routes to All Users
 router.route('/').get(getAllProducts);  
@@ -44,8 +44,5 @@ router.route('/buy/:id').patch(buyOneProduct);
 //Routes to Shippers:
 router.route('/shipper/:id').get(getOneProductShipper);
 router.route('/shipper/:id').patch(editShipping);
-
-
-
-
+``
 module.exports = router
