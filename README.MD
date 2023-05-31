@@ -14,7 +14,7 @@ npm install && npm start
 #### Routers
 
 - auth.js
-- jobs.js
+- products.js
 
 #### User Model
 
@@ -32,6 +32,8 @@ Email Validation Regex
 - Generate Token
 - Send Response with Token
 
+
+
 #### Login User
 
 - Validate - email, password - in controller
@@ -41,6 +43,8 @@ Email Validation Regex
 - If no user or password does not match, throw UnauthenticatedError
 - If correct, generate Token
 - Send Response with Token
+
+![Alt text](images/E-Commerce%20API%20Register_Login.jpg)
 
 #### Mongoose Errors
 
